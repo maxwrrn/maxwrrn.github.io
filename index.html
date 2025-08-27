@@ -41,14 +41,14 @@
       --radius-lg: 12px;
       --radius-xl: 16px;
       
-      /* Spacing */
-      --space-xs: 0.5rem;
-      --space-sm: 1rem;
-      --space-md: 1.5rem;
-      --space-lg: 2rem;
-      --space-xl: 3rem;
-      --space-2xl: 4rem;
-      --space-3xl: 6rem;
+      /* Spacing (compact) */
+      --space-xs: 0.25rem;
+      --space-sm: 0.5rem;
+      --space-md: 1rem;
+      --space-lg: 1.25rem;
+      --space-xl: 2rem;
+      --space-2xl: 2.5rem;
+      --space-3xl: 3.5rem;
     }
 
     * {
@@ -65,12 +65,52 @@
       font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
       background: var(--bg-primary);
       color: var(--text-primary);
-      line-height: 1.7;
+      line-height: 1.5;
       font-weight: 400;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
       overflow-x: hidden;
+      padding-top: 64px;
     }
+    /* Moving Background (subtle) */
+    .moving-background {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.18;
+    }
+
+    .moving-bg-element {
+      position: absolute;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, var(--accent) 0%, rgba(30, 64, 175, 0.35) 45%, transparent 70%);
+      filter: blur(10px);
+      mix-blend-mode: screen;
+      animation: float 20s ease-in-out infinite alternate;
+    }
+
+    .moving-bg-element:nth-child(1) { width: 420px; height: 420px; top: 12%; left: 6%; }
+    .moving-bg-element:nth-child(2) { width: 300px; height: 300px; top: 58%; right: 10%; }
+    .moving-bg-element:nth-child(3) { width: 240px; height: 240px; bottom: 20%; left: 16%; }
+    .moving-bg-element:nth-child(4) { width: 340px; height: 340px; top: 32%; right: 26%; }
+    .moving-bg-element:nth-child(5) { width: 260px; height: 260px; top: 70%; left: 30%; }
+    .moving-bg-element:nth-child(6) { width: 200px; height: 200px; bottom: 10%; right: 20%; }
+    .moving-bg-element:nth-child(7) { width: 160px; height: 160px; top: 20%; right: 45%; }
+    .moving-bg-element:nth-child(8) { width: 300px; height: 300px; bottom: 40%; right: 5%; }
+
+    /* Floating animation for background elements */
+    @keyframes float {
+      0% { transform: translate(0, 0) rotate(0deg); }
+      25% { transform: translate(15px, -10px) rotate(1deg); }
+      50% { transform: translate(-15px, 10px) rotate(-1deg); }
+      75% { transform: translate(10px, -5px) rotate(1deg); }
+      100% { transform: translate(0, 0) rotate(0deg); }
+    }
+
 
     .container {
       max-width: 1200px;
@@ -96,61 +136,63 @@
       transition: width 0.1s ease;
     }
 
-    /* Moving Background */
-    .moving-background {
+    /* Navbar */
+    .navbar {
       position: fixed;
       top: 0;
       left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      z-index: -1;
-      opacity: 0.03;
+      right: 0;
+      height: 64px;
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: saturate(180%) blur(12px);
+      border-bottom: 1px solid var(--border);
+      z-index: 10000;
+      display: flex;
+      align-items: center;
     }
 
-    .moving-bg-element {
-      position: absolute;
-      border-radius: 50%;
-      background: var(--accent);
-      opacity: 0.1;
+    .navbar .container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
     }
 
-    .moving-bg-element:nth-child(1) {
-      width: 300px;
-      height: 300px;
-      top: 20%;
-      left: 10%;
+    .nav-brand {
+      font-weight: 700;
+      color: var(--text-primary);
+      letter-spacing: -0.02em;
     }
 
-    .moving-bg-element:nth-child(2) {
-      width: 200px;
-      height: 200px;
-      top: 60%;
-      right: 15%;
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: var(--space-md);
+      flex-wrap: wrap;
     }
 
-    .moving-bg-element:nth-child(3) {
-      width: 150px;
-      height: 150px;
-      bottom: 30%;
-      left: 20%;
+    .nav-links a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.95rem;
+      padding: var(--space-xs) var(--space-sm);
+      border-radius: 6px;
+      transition: background 0.2s ease, color 0.2s ease;
     }
 
-    .moving-bg-element:nth-child(4) {
-      width: 250px;
-      height: 250px;
-      top: 40%;
-      right: 30%;
+    .nav-links a:hover {
+      background: var(--bg-tertiary);
+      color: var(--text-primary);
     }
 
     /* Header */
     header {
-      background: linear-gradient(135deg, var(--bg-dark) 0%, var(--primary-dark) 100%);
+      background: var(--bg-dark);
       color: var(--text-light);
-      padding: var(--space-3xl) 0 var(--space-2xl);
+      padding: var(--space-2xl) 0 var(--space-xl);
       position: relative;
       overflow: hidden;
-      min-height: 100vh;
+      min-height: 70vh;
       display: flex;
       align-items: center;
     }
@@ -178,8 +220,8 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: var(--space-2xl);
-      margin-bottom: var(--space-2xl);
+      gap: var(--space-lg);
+      margin-bottom: var(--space-lg);
       flex-wrap: wrap;
     }
 
@@ -235,7 +277,7 @@
 
     header .subtitle {
       font-size: clamp(1.2rem, 2.5vw, 1.5rem);
-      margin: 0 0 var(--space-lg) 0;
+      margin: 0 0 var(--space-md) 0;
       font-weight: 400;
       opacity: 0.9;
       color: var(--text-muted);
@@ -298,26 +340,16 @@
 
     /* Main Content */
     main {
-      padding: var(--space-3xl) 0;
+      padding: var(--space-xl) 0;
       background: var(--bg-primary);
       position: relative;
     }
 
     /* Section backgrounds with subtle animations */
     section {
-      margin-bottom: var(--space-3xl);
+      margin-bottom: var(--space-xl);
       position: relative;
-      padding: var(--space-2xl) 0;
-    }
-
-    section:nth-child(even) {
-      background: var(--bg-secondary);
-      margin: 0 calc(-1 * var(--space-lg));
-      padding: var(--space-2xl) var(--space-lg);
-      border-radius: var(--radius-xl);
-    }
-
-    section:nth-child(odd) {
+      padding: var(--space-lg) 0;
       background: var(--bg-primary);
     }
 
@@ -325,7 +357,7 @@
     .section-separator {
       height: 1px;
       background: linear-gradient(90deg, transparent 0%, var(--border) 50%, transparent 100%);
-      margin: var(--space-2xl) 0;
+      margin: var(--space-lg) 0;
       opacity: 0.6;
     }
 
@@ -342,7 +374,7 @@
 
     .section-header {
       text-align: center;
-      margin-bottom: var(--space-2xl);
+      margin-bottom: var(--space-lg);
       padding: 0 var(--space-lg);
       position: relative;
     }
@@ -400,12 +432,12 @@
     .featured-project {
       background: var(--bg-primary);
       border-radius: var(--radius-xl);
-      padding: var(--space-2xl);
-      box-shadow: var(--shadow-xl);
+      padding: var(--space-xl);
+      box-shadow: var(--shadow-md);
       border: 1px solid var(--border-light);
       position: relative;
       overflow: hidden;
-      margin: 0 var(--space-lg);
+      margin: 0 var(--space-md);
       transition: all 0.4s ease;
     }
 
@@ -435,7 +467,7 @@
       font-size: 2rem;
       font-weight: 700;
       color: var(--text-primary);
-      margin-bottom: var(--space-lg);
+      margin-bottom: var(--space-md);
       display: flex;
       align-items: center;
       gap: var(--space-sm);
@@ -456,7 +488,7 @@
     .featured-project p {
       font-size: 1.1rem;
       color: var(--text-secondary);
-      margin-bottom: var(--space-2xl);
+      margin-bottom: var(--space-lg);
       line-height: 1.7;
       font-weight: 400;
     }
@@ -466,41 +498,41 @@
       align-items: center;
       gap: var(--space-xs);
       padding: var(--space-sm) var(--space-xl);
-      background: linear-gradient(135deg, var(--accent) 0%, var(--primary) 100%);
+      background: var(--accent);
       color: var(--text-light);
       text-decoration: none;
       border-radius: var(--radius);
       font-weight: 600;
       font-size: 1rem;
-      transition: all 0.3s ease;
-      box-shadow: var(--shadow-md);
+      transition: all 0.2s ease;
+      box-shadow: var(--shadow-sm);
       font-family: 'Source Code Pro', monospace;
     }
 
     .featured-project .project-link:hover {
       transform: translateY(-2px);
-      box-shadow: var(--shadow-lg);
-      background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+      box-shadow: var(--shadow-md);
+      background: var(--primary);
     }
 
     /* Grid Layouts */
     .grid {
       display: grid;
-      gap: var(--space-xl);
-      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-      padding: 0 var(--space-lg);
+      gap: var(--space-md);
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      padding: 0 var(--space-md);
     }
 
     .grid-2 {
-      grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
     }
 
     /* Cards */
     .card {
       background: var(--bg-primary);
       border-radius: var(--radius-lg);
-      padding: var(--space-xl);
-      box-shadow: var(--shadow-md);
+      padding: var(--space-md);
+      box-shadow: var(--shadow-sm);
       border: 1px solid var(--border-light);
       transition: all 0.4s ease;
       position: relative;
@@ -521,8 +553,8 @@
     }
 
     .card:hover {
-      transform: translateY(-8px);
-      box-shadow: var(--shadow-xl);
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-lg);
     }
 
     .card:hover::before {
@@ -554,7 +586,7 @@
 
     .card p {
       color: var(--text-secondary);
-      margin-bottom: var(--space-lg);
+      margin-bottom: var(--space-sm);
       line-height: 1.6;
       font-weight: 400;
     }
@@ -580,10 +612,10 @@
     .skills-section {
       background: var(--bg-primary);
       border-radius: var(--radius-xl);
-      padding: var(--space-2xl);
+      padding: var(--space-xl);
       box-shadow: var(--shadow-lg);
       border: 1px solid var(--border-light);
-      margin: 0 var(--space-lg);
+      margin: 0 var(--space-md);
       position: relative;
       overflow: hidden;
     }
@@ -635,20 +667,20 @@
     }
 
     .badge.primary {
-      background: linear-gradient(135deg, var(--accent) 0%, var(--primary) 100%);
+      background: var(--accent);
       color: var(--text-light);
       border-color: var(--accent);
     }
 
     .badge.accent {
-      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+      background: var(--primary);
       color: var(--text-light);
       border-color: var(--primary);
     }
 
     .skills-summary {
       text-align: center;
-      margin-top: var(--space-xl);
+      margin-top: var(--space-md);
       color: var(--text-secondary);
       font-size: 1rem;
       line-height: 1.6;
@@ -664,8 +696,8 @@
       background: var(--bg-dark);
       color: var(--text-light);
       text-align: center;
-      padding: var(--space-2xl) 0;
-      margin-top: var(--space-3xl);
+      padding: var(--space-xl) 0;
+      margin-top: var(--space-xl);
       position: relative;
     }
 
@@ -771,6 +803,12 @@
 
     /* Responsive Design */
     @media (max-width: 768px) {
+      .navbar {
+        height: 56px;
+      }
+      body {
+        padding-top: 56px;
+      }
       .container {
         padding: 0 var(--space-sm);
       }
@@ -829,6 +867,10 @@
     }
 
     @media (max-width: 480px) {
+      .nav-links a {
+        font-size: 0.85rem;
+        padding: var(--space-xs) var(--space-xs);
+      }
       .featured-project,
       .skills-section {
         padding: var(--space-lg);
@@ -863,18 +905,39 @@
   </style>
 </head>
 <body>
-  <!-- Scroll Progress Bar -->
-  <div class="scroll-progress">
-    <div class="scroll-progress-bar"></div>
-  </div>
-
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="container">
+      <div class="nav-brand">Maximilian Warren</div>
+      <div class="nav-links">
+        <a href="#about" onclick="scrollToSection('about'); return false;">About</a>
+        <a href="#featured" onclick="scrollToSection('featured'); return false;">Featured</a>
+        <a href="#projects" onclick="scrollToSection('projects'); return false;">Projects</a>
+        <a href="#experience" onclick="scrollToSection('experience'); return false;">Experience</a>
+        <a href="#education" onclick="scrollToSection('education'); return false;">Education</a>
+        <a href="#skills" onclick="scrollToSection('skills'); return false;">Skills</a>
+        <a href="#languages" onclick="scrollToSection('languages'); return false;">Languages</a>
+      </div>
+    </div>
+  </nav>
   <!-- Moving Background -->
   <div class="moving-background">
     <div class="moving-bg-element"></div>
     <div class="moving-bg-element"></div>
     <div class="moving-bg-element"></div>
     <div class="moving-bg-element"></div>
+    <div class="moving-bg-element"></div>
+    <div class="moving-bg-element"></div>
+    <div class="moving-bg-element"></div>
+    <div class="moving-bg-element"></div>
   </div>
+  
+  <!-- Scroll Progress Bar -->
+  <div class="scroll-progress">
+    <div class="scroll-progress-bar"></div>
+  </div>
+
+  
 
   <header>
     <div class="container">
@@ -890,7 +953,7 @@
               <a href="tel:+447746133649">📞 Call</a>
               <a href="https://www.linkedin.com/in/warrenmax" target="_blank">💼 LinkedIn</a>
               <a href="https://github.com/maxwrrn" target="_blank">🐙 GitHub</a>
-              <a href="assets/MaxWarrenCV.pdf" target="_blank" class="cv-button">
+              <a href="MaxWarrenCV.pdf" target="_blank" class="cv-button">
                 📄 Download CV
               </a>
             </div>
@@ -1191,20 +1254,6 @@
       });
     });
 
-    // Moving background that follows scroll
-    function updateMovingBackground() {
-      const scrolled = window.pageYOffset;
-      const movingElements = document.querySelectorAll('.moving-bg-element');
-      
-      movingElements.forEach((element, index) => {
-        const speed = 0.3 + (index * 0.1);
-        const yPos = -(scrolled * speed);
-        const xPos = Math.sin(scrolled * 0.001 + index) * 50;
-        
-        element.style.transform = `translate(${xPos}px, ${yPos}px) rotate(${scrolled * 0.05 + index * 45}deg)`;
-      });
-    }
-
     // Scroll progress bar
     function updateScrollProgress() {
       const scrollTop = window.pageYOffset;
@@ -1219,7 +1268,6 @@
 
     // Combined scroll handler
     function handleScroll() {
-      updateMovingBackground();
       updateScrollProgress();
       requestTick();
     }
@@ -1247,9 +1295,7 @@
       sectionObserver.observe(section);
     });
 
-    // Initialize moving background on load
     window.addEventListener('load', () => {
-      updateMovingBackground();
       updateScrollProgress();
     });
   </script>
